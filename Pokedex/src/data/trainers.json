@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "nome": "Ash",
+    "papel": "Treinador",
+    "insignias": 8,
+    "pokemon": [
+      { "id": 25, "nome": "Pikachu" },
+      { "id": 1, "nome": "Bulbasaur" },
+      { "id": 6, "nome": "Charizard" },
+      { "id": 7, "nome": "Squirtle" },
+      { "id": 12, "nome": "Butterfree" },
+      { "id": 18, "nome": "Pidgeot" }
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Brock",
+    "papel": "Líder de Ginásio",
+    "insignias": 1,
+    "pokemon": [
+      { "id": 95, "nome": "Onix" },
+      { "id": 74, "nome": "Geodude" },
+      { "id": 37, "nome": "Vulpix" },
+      { "id": 41, "nome": "Zubat" }
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Misty",
+    "papel": "Líder de Ginásio",
+    "insignias": 2,
+    "pokemon": [
+      { "id": 120, "nome": "Staryu" },
+      { "id": 121, "nome": "Starmie" },
+      { "id": 118, "nome": "Goldeen" },
+      { "id": 54, "nome": "Psyduck" },
+      { "id": 116, "nome": "Horsea" }
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "Lt. Surge",
+    "papel": "Líder de Ginásio",
+    "insignias": 3,
+    "pokemon": [
+      { "id": 26, "nome": "Raichu" },
+      { "id": 100, "nome": "Voltorb" },
+      { "id": 25, "nome": "Pikachu" }
+    ]
+  },
+  {
+    "id": 5,
+    "nome": "Erika",
+    "papel": "Líder de Ginásio",
+    "insignias": 4,
+    "pokemon": [
+      { "id": 114, "nome": "Tangela" },
+      { "id": 70, "nome": "Weepinbell" },
+      { "id": 44, "nome": "Gloom" },
+      { "id": 45, "nome": "Vileplume" }
+    ]
+  },
+  {
+    "id": 6,
+    "nome": "Koga",
+    "papel": "Líder de Ginásio",
+    "insignias": 5,
+    "pokemon": [
+      { "id": 48, "nome": "Venonat" },
+      { "id": 49, "nome": "Venomoth" },
+      { "id": 110, "nome": "Weezing" },
+      { "id": 89, "nome": "Muk" }
+    ]
+  },
+  {
+    "id": 7,
+    "nome": "Sabrina",
+    "papel": "Líder de Ginásio",
+    "insignias": 6,
+    "pokemon": [
+      { "id": 63, "nome": "Abra" },
+      { "id": 64, "nome": "Kadabra" },
+      { "id": 65, "nome": "Alakazam" },
+      { "id": 122, "nome": "Mr. Mime" }
+    ]
+  },
+  {
+    "id": 8,
+    "nome": "Blaine",
+    "papel": "Líder de Ginásio",
+    "insignias": 7,
+    "pokemon": [
+      { "id": 38, "nome": "Ninetales" },
+      { "id": 78, "nome": "Rapidash" },
+      { "id": 126, "nome": "Magmar" },
+      { "id": 59, "nome": "Arcanine" }
+    ]
+  },
+  {
+    "id": 9,
+    "nome": "Giovanni",
+    "papel": "Líder de Ginásio",
+    "insignias": 8,
+    "pokemon": [
+      { "id": 53, "nome": "Persian" },
+      { "id": 111, "nome": "Rhyhorn" },
+      { "id": 112, "nome": "Rhydon" },
+      { "id": 34, "nome": "Nidoking" },
+      { "id": 31, "nome": "Nidoqueen" }
+    ]
+  },
+  {
+    "id": 10,
+    "nome": "Gary",
+    "papel": "Rival",
+    "insignias": 10,
+    "pokemon": [
+      { "id": 133, "nome": "Eevee" },
+      { "id": 9, "nome": "Blastoise" },
+      { "id": 34, "nome": "Nidoking" },
+      { "id": 59, "nome": "Arcanine" },
+      { "id": 98, "nome": "Krabby" }
+    ]
+  },
+  {
+    "id": 11,
+    "nome": "Team Rocket",
+    "papel": "Vilões",
+    "insignias": 0,
+    "pokemon": [
+      { "id": 52, "nome": "Meowth" },
+      { "id": 23, "nome": "Ekans" },
+      { "id": 24, "nome": "Arbok" },
+      { "id": 109, "nome": "Koffing" },
+      { "id": 110, "nome": "Weezing" },
+      { "id": 71, "nome": "Victreebel" }
+    ]
+  },
+  {
+    "id": 12,
+    "nome": "Lance",
+    "papel": "Campeão",
+    "insignias": 8,
+    "pokemon": [
+      { "id": 149, "nome": "Dragonite" },
+      { "id": 148, "nome": "Dragonair" },
+      { "id": 130, "nome": "Gyarados" },
+      { "id": 142, "nome": "Aerodactyl" }
+    ]
+  }
+]
