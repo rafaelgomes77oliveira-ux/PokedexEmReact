@@ -234,7 +234,9 @@ input[type='text'] {
   border: 10px solid var(--bezel);
   border-radius: 12px 12px 12px 40px;
   overflow: hidden;
-  min-height: 520px;
+  /* Altura fixa: o conteúdo rola dentro da tela, não na página */
+  height: min(700px, calc(100dvh - 200px));
+  min-height: 420px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 0 rgba(0, 0, 0, 0.2);
   transition: background 0.3s, border-color 0.3s;
 }
@@ -316,6 +318,9 @@ input[type='text'] {
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   padding: 16px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* Imagens */
@@ -530,8 +535,14 @@ input[type='text'] {
 /* Celular */
 
 @media (max-width: 640px) {
+  .pokedex-elements {
+    height: auto;
+    min-height: 0;
+  }
+
   .pokedex-content {
     grid-template-columns: 1fr;
+    overflow-y: visible;
   }
 
   .pokedex-elements-header {
