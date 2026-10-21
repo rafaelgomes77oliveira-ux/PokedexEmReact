@@ -4,17 +4,18 @@ import { IoSettingsSharp } from 'react-icons/io5'
 import { MdCatchingPokemon } from 'react-icons/md'
 import TrainerList from './components/TrainerList'
 import trainers from './data/trainers.json'
+import pokedex from './data/pokedex-data.json'
 import './App.css'
 
-const TOTAL_POKEMON = 151
-const API_URL = 'https://pokeapi.co/api/v2/pokemon'
+const TOTAL_POKEMON = pokedex.pokemon.length
+const SPRITE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon'
 
 const STAT_NAMES = {
   hp: 'HP',
   attack: 'Ataque',
   defense: 'Defesa',
-  'special-attack': 'Atq. Esp.',
-  'special-defense': 'Def. Esp.',
+  specialAttack: 'Atq. Esp.',
+  specialDefense: 'Def. Esp.',
   speed: 'Velocidade',
 }
 
@@ -28,7 +29,6 @@ const TYPE_NAMES = {
 
 function App() {
   const [pokemonId, setPokemonId] = useState(1)
-  const [pokemon, setPokemon] = useState(null)
   const [error, setError] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
   const [shiny, setShiny] = useState(false)
@@ -36,25 +36,6 @@ function App() {
   const [search, setSearch] = useState('')
   const [view, setView] = useState('pokedex')
   const [selectedTrainerId, setSelectedTrainerId] = useState(null)
-
-  useEffect(() => {
-    const controller = new AbortController()
-
-    fetch(`${API_URL}/${pokemonId}`, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error('Pokémon não encontrado')
-        return res.json()
-      })
-      .then((data) => {
-        setPokemon(data)
-      })
-      .catch((err) => {
-        if (err.name === 'AbortError') return
-        setError(err.message)
-      })
-
-    return () => controller.abort()
-  }, [pokemonId])
 
   useEffect(() => {
     function handleKey(e) {
@@ -98,7 +79,7 @@ function App() {
     goTo(id)
   }
 
-  async function handleSearch(e) {
+  function handleSearch(e) {
     e.preventDefault()
     const query = search.trim().toLowerCase()
     if (!query) return
@@ -114,30 +95,23 @@ function App() {
       return
     }
 
-    try {
-      const res = await fetch(`${API_URL}/${query}`)
-      if (!res.ok) throw new Error()
-      const data = await res.json()
-      if (data.id > TOTAL_POKEMON) {
-        setError(`${data.name} não é da 1ª geração`)
-        return
-      }
-      goTo(data.id)
+    const found = pokedex.pokemon.find((p) => p.name.toLowerCase() === query)
+    if (found) {
+      goTo(found.id)
       setSearch('')
-    } catch {
+    } else {
       setError(`"${search}" não encontrado`)
     }
   }
 
-  const loading = !error && pokemon?.id !== pokemonId
-  const sprites = pokemon?.sprites
-  const artwork = shiny
-    ? sprites?.other['official-artwork'].front_shiny
-    : sprites?.other['official-artwork'].front_default
-  const pixelSprite = shiny ? sprites?.front_shiny : sprites?.front_default
-  const pixelSpriteBack = shiny ? sprites?.back_shiny : sprites?.back_default
-  const totalStats = pokemon?.stats.reduce((sum, s) => sum + s.base_stat, 0)
-  const mainType = pokemon?.types[0].type.name
+  const pokemon = pokedex.pokemon.find((p) => p.id === pokemonId)
+  const shinyPath = shiny ? '/shiny' : ''
+  const artwork = `${SPRITE_URL}/other/official-artwork${shinyPath}/${pokemonId}.png`
+  const pixelSprite = `${SPRITE_URL}${shinyPath}/${pokemonId}.png`
+  const pixelSpriteBack = `${SPRITE_URL}/back${shinyPath}/${pokemonId}.png`
+  const stats = Object.entries(pokemon.stats)
+  const totalStats = stats.reduce((sum, [, value]) => sum + value, 0)
+  const mainType = pokemon.types[0].name.toLowerCase()
   const pokemonTrainers = trainers.filter((t) => t.pokemon.some((p) => p.id === pokemonId))
 
   return (
@@ -229,10 +203,8 @@ function App() {
               currentPokemonId={pokemonId}
               onSelectPokemon={goTo}
             />
-          ) : loading && !pokemon ? (
-            <div className='pokedex-loading'>Carregando...</div>
-          ) : pokemon && (
-            <div className={`pokedex-content ${loading ? 'is-loading' : ''}`}>
+          ) : (
+            <div className='pokedex-content'>
               <aside className='pokedex-elements-images'>
                 <div className={`artwork type-${mainType}`}>
                   <span className='poke-number'>
@@ -246,29 +218,28 @@ function App() {
                 </div>
                 <h1 className='poke-name'>{pokemon.name}</h1>
                 <div className='types'>
-                  {pokemon.types.map(({ type }) => (
-                    <span key={type.name} className={`type type-${type.name}`}>
-                      {TYPE_NAMES[type.name] ?? type.name}
-                    </span>
-                  ))}
-                </div>
-                <div className='measures'>
-                  <span>Altura: {pokemon.height / 10} m</span>
-                  <span>Peso: {pokemon.weight / 10} kg</span>
+                  {pokemon.types.map((type) => {
+                    const key = type.name.toLowerCase()
+                    return (
+                      <span key={type.id} className={`type type-${key}`}>
+                        {TYPE_NAMES[key] ?? type.name}
+                      </span>
+                    )
+                  })}
                 </div>
               </aside>
 
               <section className='pokedex-elements-info'>
                 <h4>Atributos base</h4>
                 <ul className='stats'>
-                  {pokemon.stats.map(({ stat, base_stat }) => (
-                    <li key={stat.name}>
-                      <span className='stat-name'>{STAT_NAMES[stat.name]}</span>
-                      <span className='stat-value'>{base_stat}</span>
+                  {stats.map(([name, value]) => (
+                    <li key={name}>
+                      <span className='stat-name'>{STAT_NAMES[name]}</span>
+                      <span className='stat-value'>{value}</span>
                       <div className='stat-bar'>
                         <div
                           className={`stat-fill type-${mainType}`}
-                          style={{ width: `${Math.min(base_stat / 180, 1) * 100}%` }}
+                          style={{ width: `${Math.min(value / 180, 1) * 100}%` }}
                         />
                       </div>
                     </li>
